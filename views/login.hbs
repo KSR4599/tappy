@@ -1,0 +1,154 @@
+<html>
+<head>
+
+
+<link href="/css/bootstrap.min.css" rel="stylesheet" >
+  <link href="/css/styles.css" rel="stylesheet" >
+    <link rel="shortcut icon" type="image/png" href="/images/fav.png" />
+
+<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Audiowide|Concert+One|Montserrat+Alternates|Unica+One" rel="stylesheet">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="indexcss.css">
+
+
+
+
+<style>
+.loggo{
+height: 1%;
+ width:100%;
+}
+</style>
+
+</head>
+
+<body>
+
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/api">
+      <img src="/images/loggo.png"/ class="loggo">
+    </a>
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+ </button>
+
+ <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+     <li class="nav-item active">
+       <a class="nav-link mx-2" href="/api">Register <span class="sr-only">(current)</span></a>
+     </li>
+     
+     <li class="nav-item">
+       <a class="nav-link mx-2 " href="/api/login">Registration Verification</a>
+     </li>
+   
+     <li class="nav-item">
+       <a class="nav-link mx-2" href="/api/login1">Login</a>
+     </li>
+     
+
+
+     {{#if user}}
+     <li class="nav-item">
+       <a class="nav-link mx-2" href="/api/profile">Profile</a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link mx-2" href="/api/contact">Contact Us</a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link mx-2" href="/api/donate">Donate Us</a>
+     </li>
+
+
+   <li class="nav-item">
+     <a class="nav-link mx-2" href="/api/logout">Logout</a>
+   </li>
+   {{/if}}
+   </ul>
+
+   <div class="floatright">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search">
+   </div>
+ </div>
+
+      </div>
+
+</nav>
+
+
+
+<script>
+
+if({{x}}==1){
+  swal({
+    title: "Success! Now you are Registered!🤝 ",
+    text: "You can now login! ✌🏻",
+    icon: "success",
+    button: "👍🏻",
+  });
+}
+
+</script>
+
+
+
+{{{flash}}}
+
+<div align="center">
+<form method="post" action="/api/login">
+  <div class="container">
+    <h1 class="sty" style="color:powderblue;font-size:350%;">Complete Your Registration</h1>
+    <p class="sty">Please fill in this form to complete your registration.</p>
+    <hr>
+
+    <p class="sty"><b>Enter Username</b></p>
+    <input type="text" placeholder="Enter Username" name="username" required>
+
+    <p class="sty"><b>Enter your Unique code</b></p>
+    <input type="text" placeholder="Enter Unique Code" name="unique_code" required>
+
+
+    <p class="sty"><b>Password</b></p>
+    <input type="password" placeholder="Enter Password" name="password" required>
+
+    <p class="sty"><b>Repeat Password</b></p>
+    <input type="password" placeholder="Enter Password" name="password_repeat" required>
+
+<br />
+  <br/><button type="submit" class="btn btn-outline-success" name="submit">Login</button>
+  </div>
+</form>
+<br /><br />
+<a href="/api1/google" class="btn btn-danger btn-lg">
+  <span class="fab fa-google"></span>
+  Google Sign-in
+</a>
+</div>
+
+ <div class="container signin">
+    <p class="sty">Already have an account? <a href="/api/login1" class="cc">Sign in</a>.</p>
+  </div>
+
+
+</body>
+</html>

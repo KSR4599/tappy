@@ -1,0 +1,168 @@
+<html>
+
+<head>
+  <link href="/css/bootstrap.min.css" rel="stylesheet" >
+<link href="/css/styles.css" rel="stylesheet" >
+  <link rel="shortcut icon" type="image/png" href="/images/fav.png" />
+<link rel="stylesheet" type="text/css" href="indexcss.css">
+<link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Audiowide|Concert+One|Montserrat+Alternates|Unica+One" rel="stylesheet">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="indexcss.css">
+
+
+
+<style>
+.loggo{
+height: 1%;
+ width:100%;
+}
+</style>
+
+</head>
+<body>
+
+<script>
+var x=0;
+function myFunction() {
+  swal({ title: "You are now registered!",
+  text: "Now you can login to your Account!",
+  type: "success"}).then(okay => {
+  if (okay) {
+  window.location.href = "./api/login";
+  }
+  });
+}
+
+if({{x}}==3){
+  swal({
+  title: "Oops!",
+  text: "User with that email already exists!",
+  icon: "warning",
+  button: "ok",
+})
+}
+
+if({{x}}==33){
+  swal({
+  title: "Oops!",
+  text: "Preferred username already taken!",
+  icon: "warning",
+  button: "ok",
+})
+}
+
+
+
+</script>
+
+<div align="center">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/api">
+      <img src="/images/loggo.png"/ class="loggo">
+    </a>
+ <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+ </button>
+
+ <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+   <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+     <li class="nav-item active">
+       <a class="nav-link mx-2" href="/api">Register <span class="sr-only">(current)</span></a>
+     </li>
+     
+     <li class="nav-item">
+       <a class="nav-link mx-2 " href="/api/login">Registration Verification</a>
+     </li>
+   
+     <li class="nav-item">
+       <a class="nav-link mx-2" href="/api/login1">Login</a>
+     </li>
+     
+
+
+
+     {{#if user}}
+     <li class="nav-item">
+       <a class="nav-link mx-2" href="/api/profile">Profile</a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link mx-2" href="/api/contact">Contact Us</a>
+     </li>
+     <li class="nav-item">
+       <a class="nav-link mx-2" href="/api/donate">Donate Us</a>
+     </li>
+
+
+   <li class="nav-item">
+     <a class="nav-link mx-2" href="/api/logout">Logout</a>
+   </li>
+   {{/if}}
+   </ul>
+
+   <div class="floatright">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search">
+   </div>
+ </div>
+
+      </div>
+
+</nav>
+
+
+
+  {{{flash}}}
+<form method="post" action="api/register">
+  <div class="container">
+    <h1 class="sty" style="color:powderblue;font-size:350%;">Register</h1>
+    <p class="sty">Please fill in this form to create an account.</p>
+    <hr>
+
+    <p class="sty"><b>Enter First Name</b></p>
+    <input type="text" placeholder="Enter first name" name="fname" >
+
+    <p class="sty"><b>Enter Last Name</b></p>
+    <input type="text" placeholder="Enter last name" name="lname" >
+
+    <p class="sty"><b>Email</b></p>
+    <input type="email" placeholder="Enter Email" name="email" >
+
+    <p class="sty"><b>Enter Preferred User Name</b></p>
+    <input type="text" placeholder="Enter preferred name" name = "pname" >
+
+
+<p class="text-danger">{{{errors}}}</p>
+
+    <p class="sty">Profile-Image</p>
+   <input type="file" class="btn btn-outline-warning" name="profileimage" />
+
+    <hr>
+    <p>By creating an account you agree to our <a href="#" class="cc">Terms & Privacy</a>.</p>
+
+    <button type="submit" class="btn btn-outline-success" name="submit" onclick="myFunction()">Register</button>
+  </div>
+
+  <div class="container signin">
+    <p class="sty">Already have an account? <a href="/api/login1" class="cc">Sign in</a>.</p>
+  </div>
+</form>
+</div>
+</body>
+</html>
