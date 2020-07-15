@@ -22,29 +22,14 @@ var user_data= new mongoose.Schema({
     unique_code: {
         type: String,
   
-      },
-
-    google :{
-      id: String,
-      token: String,
-      email: String,
-      name: String
-    }
-
+      }
 
   })
 
 
 var adminSchema= new mongoose.Schema({
    
-
-    google :{
-      id: String,
-      token: String,
-      email: String,
-      name: String
-    },
-
+    name : String,
     requests : [user_data]
 
 
@@ -73,3 +58,20 @@ module.exports.cryptAdmin = function(newAdmin,callback){
 
 }
 
+
+module.exports.createAdmin = function(newAdmin,callback){
+  console.log("Admin inserted : "+newAdmin);
+  newAdmin.save(callback);
+
+
+};
+
+module.exports.getRequestByUsername = function(username, callback){
+  var query = {pref_username : username};
+  Admin.requests.findOne(query, callback);
+}
+
+module.exports.getAdminByAdminname = function(adminname, callback){
+  var query = {name : adminname};
+  Admin.findOne(query, callback);
+}

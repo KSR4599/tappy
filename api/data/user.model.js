@@ -45,14 +45,7 @@ var userSchema= new mongoose.Schema({
   
       },
 
-    socialSchema:[socialSchema1],
-
-    google :{
-      id: String,
-      token: String,
-      email: String,
-      name: String
-    }
+    socialSchema:[socialSchema1]
 
 
   })

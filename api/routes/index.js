@@ -13,6 +13,7 @@ var session = require('express-session')
 var cookieParser = require('cookie-parser')
 var flash = require('express-flash-notification')
 var User=mongoose.model('User')
+var Admin = mongoose.model('Admin')
 var ctrlUsers = require('../controllers/users.controllers.js');
 var hbs  = require('express-handlebars');
 var path= require('path')
@@ -27,6 +28,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 const nodemailer = require('nodemailer')
 
+var flag = 0;
 
 
 router.get('/',function(req, res,next){
@@ -46,6 +48,24 @@ router.get('/',function(req, res,next){
         res.render('login');
       
   })
+
+
+ router.post('/new_admin',function(req, res,next){
+
+    var newAdmin = new Admin({
+        name :'admin',
+       requests : []
+      })
+
+      Admin.createAdmin(newAdmin,function(err, newAdmin){
+        if(err) { 
+            throw err;  } else {
+
+    return res.json({ done : true });
+      
+  }
+})
+ })
 
 
 
@@ -77,13 +97,24 @@ router.get('/',function(req, res,next){
   
 })
 
-router.get('/admin-login',function(req, res,next){
+router.get('/admin',function(req, res,next){
 
     
     console.log("admin login called");
+    Admin.findOne({ 'name': 'admin'}, function(err, admin) {
+        if(admin){
+            console.log("admin found : "+ admin); 
 
-    res.render('admin_login');
+            res.render('admin', {requests: [admin.requests]});
+
+        } else {
+            console.log("admin not found"); 
+        }
+
+
+    //res.render('admin');
   
+})
 })
 
 
@@ -92,7 +123,11 @@ router.get('/profile',function(req, res,next){
     
     console.log("profile page called");
 
-    res.render('profile');
+    var user=req.user;
+
+    console.log("Profile of user is : "+ user);
+
+    res.render('profile', {user:user});
   
 })
 
@@ -148,46 +183,69 @@ router.get('/profile',function(req, res,next){
                             //MAIL TRIGGERING //
   
  
-     console.log("Now triggering mail to "+ email + "with a unique code of "+ result);
+    //  console.log("Now triggering mail to "+ email + "with a unique code of "+ result);
  
-     //nodemailer
-     let transporter = nodemailer.createTransport({
-         host: 'smtp.gmail.com',
-         port: 587,
-         secure: false, // true for 465, false for other ports
-         auth: {
-             user: 'killershell9@gmail.com', // generated ethereal user
-             pass:  'KILLKILL459945'// generated ethereal password
-         },
-         tls:{
-           rejectUnauthorized:false
-         }
-     });
+    //  //nodemailer
+    //  let transporter = nodemailer.createTransport({
+    //      host: 'smtp.gmail.com',
+    //      port: 587,
+    //      secure: false, // true for 465, false for other ports
+    //      auth: {
+    //          user: 'killershell9@gmail.com', // generated ethereal user
+    //          pass:  'KILLKILL459945'// generated ethereal password
+    //      },
+    //      tls:{
+    //        rejectUnauthorized:false
+    //      }
+    //  });
  
-     var code_string = '<p> Thank you for registering with us! Your unique code is ' + result + '. </p>';
+    //  var code_string = '<p> Thank you for registering with us! Your unique code is ' + result + '. </p>';
  
-     let mailOptions = {
-     from: '"KSR Corp." <killershell9@gmail.com>', // sender address
-     to: email, // list of receivers
-     subject: '✅ Tappy Registration Succesful',
-     html: code_string
-     };
+    //  let mailOptions = {
+    //  from: '"KSR Corp." <killershell9@gmail.com>', // sender address
+    //  to: email, // list of receivers
+    //  subject: '✅ Tappy Registration Succesful',
+    //  html: code_string
+    //  };
  
-     // send mail with defined transport object
-     transporter.sendMail(mailOptions, (error, info) => {
-         if (error) {
-             return console.log(error);
-         }
-         console.log('Message sent: %s', info.messageId);
-         console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    //  // send mail with defined transport object
+    //  transporter.sendMail(mailOptions, (error, info) => {
+    //      if (error) {
+    //          return console.log(error);
+    //      }
+    //      console.log('Message sent: %s', info.messageId);
+    //      console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
  
-     });
+    //  });
  
  
      //END OF MAIL TRIGGERING //
-                    console.log(user);
-                   
-    res.render('login',{x:1});
+
+     Admin.findOne({ 'name': 'admin'}, function(err, admin) {
+        if(admin){
+            console.log("admin found : "+ admin);
+                    
+            admin.requests.push({
+
+
+                firstname:firstname,
+                    lastname: lastname,
+                    email:email,
+                    pref_username:preferredname,
+                    verified : false,
+                    unique_code : result
+                
+                  });
+                
+                  admin.save(function(err, adminUpdated) {
+                    if (err) {
+                     console.log(err);
+                    } else {
+                     console.log("Admin Updated Succesfully : "+ adminUpdated);
+                     res.redirect('./login')
+                    }
+                  });
+
                         }
                   })
             }
@@ -197,8 +255,9 @@ router.get('/profile',function(req, res,next){
    
     } 
 
-
-})
+        })
+}
+  })
 
 
 
@@ -215,7 +274,7 @@ router.post('/login', function(req, res,next) {
 User.findOne({ 'pref_username': req.body.username}, function(err, user) {
     if(user){
 
-        if(!user.verified){
+        if(user.verified){
         var stored_code = user.unique_code;
 
 
@@ -243,7 +302,7 @@ User.findOne({ 'pref_username': req.body.username}, function(err, user) {
         }
       
     } else {
-        console.log("User already verified");
+        console.log("User not verified");
     }
     } 
     else{
@@ -255,36 +314,18 @@ User.findOne({ 'pref_username': req.body.username}, function(err, user) {
 
 
 
-// router.post('/login1', function(req, res,next) {
-
-//     var username= req.body.username;
-//     var password =req.body.password;
-
-
-// //Check for same password
-
-// User.findOne({ 'pref_username': req.body.username}, function(err, user) {
-//     if(user){
-
-//     if(user.password === password){
-//         console.log("User Found and  Valid Login!");
-//     } else {
-//         console.log("User found but Invalid Login");
-//     }
-//     } 
-//     else{
-//         console.log("User not Found!");
-//     }
-// })
-// })
-
-
-
 //LOGIN
 router.post('/login1',
 passport.authenticate('local',{failureRedirect:'/api/wrong_login'}),
 function(req, res, next){
+
+    if(flag == 2){
  res.redirect('/api/profile');
+    } else {
+        if(flag == 1){
+            res.redirect('/api/admin');
+        }
+    }
 
 });
 
@@ -315,6 +356,13 @@ passport.use(new LocalStrategy(
 
         if(isMatch){
        console.log("User Found!")
+             console.log("User found to be :"+ user);
+
+             if(user.pref_username === 'admin' && user.email == 'killershell9@gmail.com') {
+                 flag = 1;
+             } else {
+                 flag = 2;
+             }
               return done(null,user);
         }
           else {

@@ -50,4 +50,5 @@ process.once('SIGUSR2',function(){
 //BRING IN SCHEMAS AND MODELS IN HERE
 
 require('./user.model.js');
+require('./admin.model.js');
 
