@@ -52,6 +52,22 @@ router.get('/',function(req, res,next){
 
  router.post('/new_admin',function(req, res,next){
 
+  var newUser = new User({
+    firstname: 'admin',
+    lastname: 'admin',
+    email: 'killershell9@gmail.com',
+    pref_username: 'admin',
+    verified : true
+  })
+
+  
+  User.createUser(newUser,function(err, user){
+    if(err) { 
+        throw err;  } else {
+         console.log("Admin is inserted as user succesfully!");
+        }
+      })
+
     var newAdmin = new Admin({
         name :'admin',
        requests : []
