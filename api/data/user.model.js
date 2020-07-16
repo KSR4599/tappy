@@ -9,11 +9,11 @@ var serviceSchema = new mongoose.Schema({
 })
 
 var socialSchema1 = new mongoose.Schema({
-    instagram : String,
-    twitter : String,
-    facebook : String,
-    snapchat : String,
-    youtube : String
+    instagram : { type: String, default: null },
+    twitter : { type: String, default: null },
+    facebook : { type: String, default: null },
+    snapchat : { type: String, default: null },
+    youtube : { type: String, default: null }
   })
 
 
@@ -45,7 +45,7 @@ var userSchema= new mongoose.Schema({
   
       },
 
-    socialSchema:[socialSchema1]
+    socialSchema: socialSchema1
 
 
   })

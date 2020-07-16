@@ -174,6 +174,7 @@ router.get('/profile',function(req, res,next){
                     email:email,
                     pref_username:preferredname,
                     verified : false,
+                    socialSchema : {},
                     unique_code : result
                   })
                   User.createUser(newUser,function(err, user){
